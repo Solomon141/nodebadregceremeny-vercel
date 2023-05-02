@@ -4,7 +4,7 @@ const cors = require("cors");
 require('dotenv').config();
 
 
-// const PORT = 3015
+const PORT = 3010
 
 // Middlewares
 app.use(cors());
@@ -21,6 +21,6 @@ app.use("/user", Register_routes);
 // });
 
 
-app.listen(process.env.PORT , (req, res) => {
+app.listen(process.env.PORT || PORT , (req, res) => {
   console.log(`connected to port ${process.env.PORT}`);
 });

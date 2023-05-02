@@ -7,15 +7,11 @@ const con = mysql.createConnection({
   // password: "P@55w0rdP@55w0rd",
   // database: "badregplccom_newweb",
 
-  // host: process.env.HOST,
-  // user: process.env.USER,
-  // password: process.env.DB_PASSWORD,
-  // database: process.env.DATABASE,
+  HOST: process.env.HOST,
+  USER: process.env.USER,
+  DB_PASSWORD: process.env.DB_PASSWORD,
+  DATABASE: process.env.DATABASE,
 
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'ceremony',
 });
 
 con.connect(function (err) {
