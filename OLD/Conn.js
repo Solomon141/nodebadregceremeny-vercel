@@ -8,13 +8,6 @@ const con = mysql.createConnection({
   DATABASE: process.env.DATABASE,
 });
 
-// const con = mysql.createConnection({
-//   host: "localhost",
-//   user: "badregplccom_userp",
-//   password: "P@55w0rdP@55w0rd",
-//   database: "badregplccom_opi",
-// }); this is my remote server
-
 con.connect(function (err) {
   if (err) throw err;
   console.log('Connected!');

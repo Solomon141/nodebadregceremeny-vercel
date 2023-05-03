@@ -6,24 +6,23 @@ const jwt = require('jsonwebtoken');
 const con = require('../Conn');
 
 router.post('/', function (req, res) {
-  const { firstname, fathername, email, phonenum, workplace, speciality } = req.body;
-  var sql = 'SELECT * FROM `dermatologists` WHERE `email` = ?';
+  const { email, phonenum, fullname, speciality, password, addresses } = req.body;
+  var sql = 'SELECT * FROM `authuser` WHERE `email` = ?';
 
   con.query(sql, [email], function (error, result) {
-    if (result.length === 0) {
-      const vkey = crypto.randomBytes(16).toString('hex');
-      con.query('INSERT INTO `dermatologists`( `firstname`, `fathername`, `email`, `phonenum`, `workplace`, `speciality`) VALUES (?, ?, ?, ?, ?, ?)', [ firstname, fathername, email, phonenum, workplace, speciality ], (error, result) => {
-        if (error) return res.status(400).json(error);
-        res.status(200).json(result);
-        SendConfirmationMail(email, vkey);
-      });
-    } else {
+    if (result.length >= 1) {
       res.send({
         error: true,
         message: 'Email Already Exists',
       });
+    } else {
+      const vkey = crypto.randomBytes(16).toString('hex');
+      con.query('INSERT INTO `authuser`(`email`, `phonenum`, `fullname`, `vkey`, `speciality`, `password`, `addresses`) VALUES ( ?, ?, ?, ?, ?, ?, ? )', [email, phonenum, fullname, vkey, speciality, password, addresses], (error, result) => {
+        if (error) return res.status(400).json(error);
+        res.status(200).json(result);
+        SendConfirmationMail(email, vkey);
+      });
     }
-    // console.log(result)
   });
 });
 
